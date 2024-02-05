@@ -69,14 +69,11 @@ int UserInit (UserStruct *User) {
 	pthread_attr_t		attr;
 	struct sched_param	param;
 	int					minprio, maxprio;
-	printf("sem ?\n");
 	sem_init(&(User->Sem), 0, 0);
 	
-	printf("barrier ?\n");
 
 	int cr = pthread_barrier_init(&UserStartBarrier, NULL, 2);
 	
-	printf("thread ?\n");
 	pthread_attr_init(&attr);
 	pthread_attr_setinheritsched(&attr, PTHREAD_EXPLICIT_SCHED);
 	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
@@ -88,11 +85,9 @@ int UserInit (UserStruct *User) {
 	pthread_attr_setstacksize(&attr, THREADSTACK);
 	pthread_attr_setschedparam(&attr, &param);
 
-	printf("thread create ?\n");
 	pthread_create( &User->Thread, &attr, UserTask, User);
 	pthread_attr_destroy(&attr);
 	
-	printf("temp ?\n");
 	User->Td = 10;
 
 	return 0;
