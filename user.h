@@ -27,6 +27,8 @@
 //#define POLICY SCHED_FIFO
 #define THREADSTACK 65536
 
+#define INCR_TEMP 1
+
 typedef struct user_struct {
 	float		Ta;
 	float		Td;
