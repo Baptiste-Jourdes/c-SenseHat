@@ -20,7 +20,7 @@
 #include <pthread.h>
 #include <semaphore.h>
 #include <sys/time.h>
-#include "sensHat.h"
+#include "senseHat.h"
 
 
 #define POLICY SCHED_RR
