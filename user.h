@@ -20,7 +20,7 @@
 #include <pthread.h>
 #include <semaphore.h>
 #include <sys/time.h>
-#include "senseHat.h"
+//#include "senseHat.h"
 
 
 #define POLICY SCHED_RR
@@ -28,6 +28,12 @@
 #define THREADSTACK 65536
 
 #define INCR_TEMP 1
+
+#define KEY_ENTER 5
+#define KEY_UP    1
+#define KEY_RIGHT 2
+#define KEY_DOWN  3
+#define KEY_LEFT  4
 
 typedef struct user_struct {
 	float		Ta;
