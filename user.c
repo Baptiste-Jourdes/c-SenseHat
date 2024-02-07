@@ -89,7 +89,7 @@ int UserInit (UserStruct *User) {
 	pthread_attr_setschedparam(&attr, &param);
 
 	printf("thread create ?\n");
-	pthread_create( &User->Thread, &attr, UserTask, User);
+	pthread_create( &User->Thread, &attr, &UserTask, User);
 	pthread_attr_destroy(&attr);
 	
 	printf("temp ?\n");
@@ -151,7 +151,7 @@ int main(){
 	User.Keys = KEY_UP; //commenter si non Fictif
 	//User.Keys = SenseHat_recupererEtatJoystick(s); //Commenter si FICTIF
 	printf("Wait2\n", User.Keys);
-	while(User.Keys != 6){
+	while(User.Keys != KEY_ENTER){
 		
 		printf("enter : %d\n", User.Keys);
 		
