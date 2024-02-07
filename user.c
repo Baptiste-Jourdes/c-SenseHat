@@ -69,11 +69,14 @@ int UserInit (UserStruct *User) {
 	pthread_attr_t		attr;
 	struct sched_param	param;
 	int					minprio, maxprio;
+	printf("sem ?\n");
 	sem_init(&(User->Sem), 0, 0);
 	
+	printf("barrier ?\n");
 
 	int cr = pthread_barrier_init(&UserStartBarrier, NULL, 2);
 	
+	printf("thread ?\n");
 	pthread_attr_init(&attr);
 	pthread_attr_setinheritsched(&attr, PTHREAD_EXPLICIT_SCHED);
 	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
@@ -85,9 +88,11 @@ int UserInit (UserStruct *User) {
 	pthread_attr_setstacksize(&attr, THREADSTACK);
 	pthread_attr_setschedparam(&attr, &param);
 
+	printf("thread create ?\n");
 	pthread_create( &User->Thread, &attr, UserTask, User);
 	pthread_attr_destroy(&attr);
 	
+	printf("temp ?\n");
 	User->Td = 10;
 
 	return 0;
@@ -130,20 +135,21 @@ int main(){
 	
 	User.Td = 30;
 	
-	SenseHat *s = SenseHat_creer();
+	//SenseHat *s = SenseHat_creer();
 	
 	
 	UserInit(&User);
 	
 	printf("%f\n", User.Td);
 	printf("%d\n", User.Sem);
-	sem_post(&(User.Sem));
-	printf("%d\n", User.Sem);
+	/*sem_post(&(User.Sem));
+	printf("%d\n", User.Sem);*/
 	
 	UserStart();
 	printf("Wait\n", User.Keys);
-	User.Keys = getc(stdin) - 48; //SenseHat(recupererEtatJoystick(s); //Intervertir si non FICTIF
-	User.Keys = 2; //commenter si non Fictif
+	User.Keys = getc(stdin); //SenseHat_recupererEtatJoystick(s); //Intervertir si non FICTIF
+	User.Keys = KEY_UP; //commenter si non Fictif
+	//User.Keys = SenseHat_recupererEtatJoystick(s); //Commenter si FICTIF
 	printf("Wait2\n", User.Keys);
 	while(User.Keys != 6){
 		
@@ -155,8 +161,9 @@ int main(){
 			sem_post(&User.Sem);
 		}
 		
-		User.Keys = getc(stdin);//SenseHat(recupererEtatJoystick(s);  //Intervertir si non FICTIF	
-		User.Keys = 2; //commenter si non Fictif
+		User.Keys = getc(stdin);//SenseHat_recupererEtatJoystick(s);  //Intervertir si non FICTIF	
+		User.Keys = KEY_UP; //commenter si non Fictif
+		//User.Keys = SenseHat_recupererEtatJoystick(s); //Commenter si FICTIF
 	}
 	
 	UserStop(&User);
