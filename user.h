@@ -20,7 +20,7 @@
 #include <pthread.h>
 #include <semaphore.h>
 #include <sys/time.h>
-//#include "senseHat.h"
+#include "senseHat.h"
 
 
 #define POLICY SCHED_RR
@@ -40,7 +40,8 @@ typedef struct user_struct {
 	float		Td;
 	pthread_t	Thread;
 	int 		Keys;
-	sem_t   Sem;
+	//sem_t   Sem;
+	pthread_mutex_t Mutex;
 } UserStruct;
 
 
