@@ -139,22 +139,16 @@ int main(){
 	
 	User.Td = 30;
 	
-	//SenseHat *s = SenseHat_creer();
+	SenseHat *s = SenseHat_creer();
 	
 	
 	UserInit(&User);
 	
-	printf("%f\n", User.Td);
-	printf("%d\n", User.Sem);
-	/*sem_post(&(User.Sem));
-	printf("%d\n", User.Sem);*/
-	
 	UserStart();
-	printf("Wait\n", User.Keys);
-	User.Keys = getc(stdin); //SenseHat_recupererEtatJoystick(s); //Intervertir si non FICTIF
-	User.Keys = KEY_UP; //commenter si non Fictif
-	//User.Keys = SenseHat_recupererEtatJoystick(s); //Commenter si FICTIF
-	printf("Wait2\n", User.Keys);
+	printf("Waitinf for Joystick\n");
+	//User.Keys = getc(stdin); //SenseHat_recupererEtatJoystick(s); //Intervertir si non FICTIF
+	//User.Keys = KEY_UP; //commenter si non Fictif
+	User.Keys = SenseHat_recupererEtatJoystick(s); //Commenter si FICTIF
 	while(User.Keys != KEY_ENTER){
 		
 		printf("enter : %d\n", User.Keys);
@@ -166,14 +160,12 @@ int main(){
 			pthread_mutex_unlock((&(User->Mutex));
 		}
 		
-		User.Keys = getc(stdin);//SenseHat_recupererEtatJoystick(s);  //Intervertir si non FICTIF	
-		User.Keys = KEY_UP; //commenter si non Fictif
-		//User.Keys = SenseHat_recupererEtatJoystick(s); //Commenter si FICTIF
+		//User.Keys = getc(stdin);//SenseHat_recupererEtatJoystick(s);  //Intervertir si non FICTIF	
+		//User.Keys = KEY_UP; //commenter si non Fictif
+		User.Keys = SenseHat_recupererEtatJoystick(s); //Commenter si FICTIF
 	}
 	
 	UserStop(&User);
-	
-	sleep(10);
 	
 	return 0;
 }
