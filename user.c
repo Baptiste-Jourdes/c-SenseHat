@@ -24,7 +24,8 @@ void *UserTask ( void *ptr ) {
 		printf("%s UserActivated\n", __FUNCTION__);
 		
 		//Attente valeur joystick (semaphore)
-		sem_wait(&(User->Sem));
+		//sem_wait(&(User->Sem));
+		pthread_mutex_lock((&(User->Mutex));
 		printf("%s UserWait\n", __FUNCTION__);
 		if (UserActivated == 0)
 					break;
@@ -70,7 +71,8 @@ int UserInit (UserStruct *User) {
 	struct sched_param	param;
 	int					minprio, maxprio;
 	printf("sem ?\n");
-	sem_init(&(User->Sem), 0, 0);
+	//sem_init(&(User->Sem), 0, 0);
+	pthread_mutex_init(&(User->Mutex));
 	
 	printf("barrier ?\n");
 
@@ -119,11 +121,13 @@ int UserStop (UserStruct *User) {
 
 	UserActivated = 0;
 
-	sem_post (&(User->Sem));
+	//sem_post (&(User->Sem));
+	pthread_mutex_unlock((&(User->Mutex));
 
 	pthread_join(User->Thread,NULL);
 	
-	sem_destroy(&(User->Sem));
+	//sem_destroy(&(User->Sem));
+	pthread_mutex_destroy(&(User->Mutex));
 	
 	return 0;
 }
@@ -158,7 +162,8 @@ int main(){
 		if(User.Keys != 0){
 			//Update Temp Ambiante
 		
-			sem_post(&User.Sem);
+			//sem_post(&User.Sem);
+			pthread_mutex_unlock((&(User->Mutex));
 		}
 		
 		User.Keys = getc(stdin);//SenseHat_recupererEtatJoystick(s);  //Intervertir si non FICTIF	
